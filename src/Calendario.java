@@ -172,83 +172,93 @@ return listaStrings;
     }
 
     // Método para convertir un array de líneas a un array de objetos Cientifica
-    public static Cientifica[] convertirAListaCientificas(String[] lineas) {
-        Cientifica[] listaCientificas = new Cientifica[lineas.length];
-        for (int i = 0; i < lineas.length; i++) {
-            if (lineas[i] != null) {
-                listaCientificas[i] = convertirLineaACientifica(lineas[i]);
-            }
+    public static Cientifica[] convertirAListaCientificas(String[] datos) {
+    // Crear un array de Cientifica con el mismo tamaño que el array de entrada
+    Cientifica[] cientificas = new Cientifica[datos.length];
+
+    // Recorrer el array de entrada
+    for (int indice = 0; indice < datos.length; indice++) {
+        // Verificar que el elemento actual no sea nulo
+        if (datos[indice] != null) {
+            // Convertir la línea actual en un objeto Cientifica
+            cientificas[indice] = convertirALineaCientifica(datos[indice]);
         }
-        return listaCientificas;
     }
 
+    // Devolver el array de objetos Cientifica
+    return cientificas;
+    }
     // Método para convertir una línea de texto a un objeto Cientifica
-    public static Cientifica convertirLineaACientifica(String linea) {
-        String[] atributos = linea.split(";");
-        return new Cientifica(atributos[0], atributos[1], atributos[2], atributos[3], atributos[4], atributos[5], atributos[6], atributos[7], atributos[8], atributos[9], atributos[10]);
-    }
+   public static Cientifica convertirALineaCientifica(String linea) {
+    // Dividir la línea en partes utilizando el delimitador ";"
+    String[] partes = linea.split(";");
 
+    // Crear un nuevo objeto Cientifica utilizando los elementos del array partes
+    return new Cientifica(
+        partes[0], partes[1], partes[2], partes[3], partes[4], 
+        partes[5], partes[6], partes[7], partes[8], partes[9], partes[10]
+        );
+    }
     // Método para generar la lista de científicas para el mes de marzo
-    public static Cientifica[] generarListaCientificasMarzo(Cientifica[] listaCientificas) {
-        Random random = new Random();
-        Cientifica[] listaCientificasMarzo = new Cientifica[31];
-        int dia = 1;
-        int contador = 0;
-        boolean dia1;
+    public static Cientifica[] obtenerListaCientificasMarzo(Cientifica[] listaCientificas) {
+    Random random = new Random();
+    Cientifica[] listaCientificasMarzo = new Cientifica[31];
+    int dia = 0;
+    boolean encontradoPrimerMarzo = false;
 
-        // Encontrar una científica que cumpla con los requisitos para el primer día de marzo
-        do {
-            if (listaCientificas[contador].getFecha().equals("1-mar")) {
-                contador++;
-                dia1 = true;
-            } else {
-                dia1 = false;
-            }
-        } while (dia1);
-
-        int randomNum = random.nextInt(contador + 1);
-        listaCientificasMarzo[0] = listaCientificas[randomNum];
-
-        // Generar la lista para los días restantes del mes
-        for (Cientifica cientifica : listaCientificas) {
-            if (esCientificaValida(cientifica, listaCientificasMarzo)) {
-                listaCientificasMarzo[dia] = cientifica;
-                dia++;
-            }
+    // Buscar el primer "1-mar" en la lista de científicas
+    for (int i = 0; i < listaCientificas.length && !encontradoPrimerMarzo; i++) {
+        if (listaCientificas[i].getFecha().equals("1-mar")) {
+            listaCientificasMarzo[dia] = listaCientificas[i];
+            encontradoPrimerMarzo = true;
+            dia++;
         }
-        return listaCientificasMarzo;
     }
 
+    // Seleccionar aleatoriamente científicas válidas para el resto de los días de marzo
+    while (dia < 31) {
+        int randomNum = random.nextInt(listaCientificas.length);
+        if (cientificaValida(listaCientificas[randomNum], listaCientificasMarzo)) {
+            listaCientificasMarzo[dia] = listaCientificas[randomNum];
+            dia++;
+        }
+    }
+
+    return listaCientificasMarzo;
+    }
     // Método para validar si una científica es válida para ser añadida a la lista de marzo
-    public static boolean esCientificaValida(Cientifica cientifica, Cientifica[] listaCientificas) {
-        boolean esValida = true;
-        boolean mismaEspecialidad = false;
-        boolean encontradaUltima = false;
-        Cientifica ultimaAniadida = null;
+   public static boolean esCientificaValida(Cientifica cientifica, Cientifica[] listaCientificas) {
+    boolean esValida = true;
+    boolean mismaEspecialidad = false;
+    boolean encontradaUltima = false;
+    Cientifica ultimaAniadida = null;
 
-        // Verificar condiciones para validar la científica
-        if (!cientifica.getAnioCartel().equals("-") || cientifica.getAnioNacimiento().equals("-") || cientifica.getAnioNacimientoNumero() == 0) {
+    // Verificar condiciones de validez
+    if (!cientifica.getAnioCartel().equals("-") || cientifica.getAnioNacimiento().equals("-") || cientifica.getAnioNacimientoNumero() == 0) {
+        esValida = false;
+    }
+
+    // Verificar especialidad y fecha
+    for (int i = 0; i < listaCientificas.length && !mismaEspecialidad; i++) {
+        if (listaCientificas[i] != null && (cientifica.getEspecialidad().equals(listaCientificas[i].getEspecialidad()) || cientifica.getFecha().equals(listaCientificas[i].getFecha()))) {
             esValida = false;
+            mismaEspecialidad = true;
         }
+    }
 
-        for (Cientifica c : listaCientificas) {
-            if (c != null && (cientifica.getEspecialidad().equals(c.getEspecialidad()) || cientifica.getFecha().equals(c.getFecha()))) {
-                esValida = false;
-                mismaEspecialidad = true;
-            }
+    // Encontrar la última científica añadida
+    for (int i = listaCientificas.length - 1; i >= 0 && !encontradaUltima; i--) {
+        if (listaCientificas[i] != null) {
+            ultimaAniadida = listaCientificas[i];
+            encontradaUltima = true;
         }
+    }
 
-        for (int i = listaCientificas.length - 1; i >= 0 && !encontradaUltima; i--) {
-            if (listaCientificas[i] != null) {
-                ultimaAniadida = listaCientificas[i];
-                encontradaUltima = true;
-            }
-        }
+    // Verificar siglo del año de nacimiento
+    if (ultimaAniadida != null && ultimaAniadida.getAnioNacimientoNumero() / 100 == cientifica.getAnioNacimientoNumero() / 100) {
+        esValida = false;
+    }
 
-        if (ultimaAniadida != null && ultimaAniadida.getAnioNacimientoNumero() / 100 == cientifica.getAnioNacimientoNumero() / 100) {
-            esValida = false;
-        }
-
-        return esValida;
+    return esValida;
     }
 }
