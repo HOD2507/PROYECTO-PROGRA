@@ -62,32 +62,49 @@ public class Calendario {
     }
 
     // Método para mostrar el menú y obtener la opción del usuario
-    public static int mostrarMenu(Scanner teclado) {
-        int opcion;
-        do {
-            System.out.println("1. Cargar fichero de entrada o solicitar ruta del archivo.\n" +
-                    "2. Generar el calendario mensual del mes Marzo.\n" +
-                    "3. Indicar un día del mes (1 al 31) para conocer qué científica se publicará ese día y su especialidad. \n" +
-                    "4. Salir de la Interfaz.");
+   public static int mostrarMenu(Scanner teclado) {
+    int opcion;
+
+    while (true) {
+        System.out.println("Selecciona una opción:");
+        System.out.println("1. Cargar fichero de entrada o solicitar ruta del archivo.");
+        System.out.println("2. Generar el calendario mensual del mes Marzo.");
+        System.out.println("3. Indicar un día del mes (1 al 31) para conocer qué científica se publicará ese día y su especialidad.");
+        System.out.println("4. Salir de la Interfaz.");
+        System.out.print("Opción: ");
+
+        if (teclado.hasNextInt()) {
             opcion = teclado.nextInt();
-            if (opcion < 1 || opcion > 4) {
-                System.out.println("¡Por favor, introduce una opción válida! (1, 2, 3, 4)\n");
+            if (opcion >= 1 && opcion <= 4) {
+                break;
+            } else {
+                System.out.println("¡Por favor, introduce una opción válida! (1, 2, 3, 4)\\n");
             }
-        } while (opcion < 1 || opcion > 4);
-        return opcion;
+        } else {
+            System.out.println("¡Entrada no válida! Por favor, introduce un número.\\n");
+            teclado.next(); // Limpiar la entrada no válida
+        }
     }
 
+    return opcion;
+}
+
+
     // Método para convertir un array de Cientifica a un array de Strings
-    public static String[] convertirCientificasAStrings(Cientifica[] listaCientificas) {
-        String[] listaStrings = new String[listaCientificas.length];
+   public static String[] cientificasAStrings(Cientifica[] listaCientificas) {
+String[] listaStrings = new String[listaCientificas.length];
         for (int i = 0; i < listaCientificas.length; i++) {
-            if (listaCientificas[i] != null) {
-                listaCientificas[i].setAnioCartel("Marzo");
-                listaStrings[i] = listaCientificas[i].toString();
-            }
-        }
-        return listaStrings;
+    Cientifica cientifica = listaCientificas[i];
+        if (cientifica != null) {
+        cientifica.setAnioCartel("Marzo");
+        listaStrings[i] = cientifica.toString();
+    } else {
+        listaStrings[i] = "No hay información disponible";
     }
+}
+
+return listaStrings;
+
 
     // Método para escribir un archivo CSV
     public static void escribirCSV(String[] listaCientificas) {
