@@ -12,7 +12,7 @@ public class Cientifica {
     private final String pais;
     private final String wikipedia;
 
-    //Científicas;Año nacimiento;Fecha;Bio;Especialidad;Cartel;Año;Otros carteles;Instagram;Pais;Wikipedia
+    //Científicas;Año nacimiento;Fecha;Bio;Especialidad;Cartel;Año;otrosCarteles;Instagram;Pais;Wikipedia
 
     public Cientifica(String nombre, String anioNacimiento, String fecha, String biografia, String especialidad, String cartel, String anioCartel
             , String otrosCarteles, String instagram, String pais, String wikipedia) {
