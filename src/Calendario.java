@@ -65,7 +65,7 @@ public class Calendario {
 
     /*
    E: 
-   S: La opción seleccionada por el usuario (entero).
+   S: opcion
    1. Muestra un menú de opciones al usuario.
    2. Lee la opción ingresada por el usuario.
    3. Valida si la opción ingresada es válida (entre 1 y 4).
@@ -103,8 +103,8 @@ public class Calendario {
     // Método para convertir un array de Cientifica a un array de Strings
 
 /*
-   E: Array de objetos Cientifica (listaCientificas).
-   S: Array de cadenas (listaStrings) con representaciones de cada Cientifica o "No hay información disponible".
+   E: array  Cientifica (listaCientificas)
+   S: Array de cadenas (listaStrings) 
    1. Inicializar listaStrings con el mismo tamaño que listaCientificas.
    2. Convertir cada objeto Cientifica a cadena.
    3. Asignar "No hay información disponible" si el objeto Cientifica es nulo.
