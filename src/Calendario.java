@@ -62,6 +62,16 @@ public class Calendario {
     }
 
     // Método para mostrar el menú y obtener la opción del usuario
+
+    /*
+   E: 
+   S: La opción seleccionada por el usuario (entero).
+   1. Muestra un menú de opciones al usuario.
+   2. Lee la opción ingresada por el usuario.
+   3. Valida si la opción ingresada es válida (entre 1 y 4).
+   4. Devuelve la opción válida seleccionada por el usuario.
+*/
+    
    public static int mostrarMenu(Scanner teclado) {
     int opcion;
 
@@ -91,6 +101,17 @@ public class Calendario {
 
 
     // Método para convertir un array de Cientifica a un array de Strings
+
+/*
+   E: Array de objetos Cientifica (listaCientificas).
+   S: Array de cadenas (listaStrings) con representaciones de cada Cientifica o "No hay información disponible".
+   1. Inicializar listaStrings con el mismo tamaño que listaCientificas.
+   2. Convertir cada objeto Cientifica a cadena.
+   3. Asignar "No hay información disponible" si el objeto Cientifica es nulo.
+   4. Devolver listaStrings.
+*/
+
+    
    public static String[] cientificasAStrings(Cientifica[] listaCientificas) {
 String[] listaStrings = new String[listaCientificas.length];
         for (int i = 0; i < listaCientificas.length; i++) {
@@ -107,9 +128,20 @@ return listaStrings;
 
 
     // Método para escribir un archivo CSV
+
+/*
+   E: listaCientificas 
+   S: Escribe datos en "planning_marzo.csv".
+   1. Define la ruta del archivo.
+   2. Abre y prepara OutputStreamWriter.
+   3. Escribe encabezados de Cientifica.
+   4. Escribe cada dato seguido de líneas en blanco.
+   5. Muestra mensaje de éxito o maneja errores de escritura.
+*/
+
     public static void escribirCSV(String[] listaCientificas) {
     String rutaArchivo = "src/planning_marzo.csv";
-    try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(rutaArchivo), StandardCharsets.UTF_8)) {
+    try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(rutaArchivo))) {
         // Escribir encabezados
         writer.write(new Cientifica("Científicas", "Año nacimiento", "Fecha",
                 "Bio", "Especialidad", "Cartel", "Año",
