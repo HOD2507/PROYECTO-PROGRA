@@ -172,6 +172,13 @@ return listaStrings;
     }
 
     // Método para convertir un array de líneas a un array de objetos Cientifica
+    // Algoritmo:
+    // 1. Crear un array de Cientifica con el mismo tamaño que el array de entrada.
+    // 2. Iterar sobre cada elemento del array de entrada.
+    // 3. Verificar que el elemento actual no sea nulo.
+    // 4. Convertir la línea actual en un objeto Cientifica.
+    // 5. Devolver el array de objetos Cientifica.
+
     public static Cientifica[] convertirAListaCientificas(String[] datos) {
     // Crear un array de Cientifica con el mismo tamaño que el array de entrada
     Cientifica[] cientificas = new Cientifica[datos.length];
@@ -189,7 +196,12 @@ return listaStrings;
     return cientificas;
     }
     // Método para convertir una línea de texto a un objeto Cientifica
-   public static Cientifica convertirALineaCientifica(String linea) {
+    // Algoritmo:
+    // 1. Dividir la línea en partes utilizando el delimitador ";".
+    // 2. Crear un nuevo objeto Cientifica utilizando los elementos del array partes.
+    // 3. Devolver el objeto Cientifica creado.
+
+    public static Cientifica convertirALineaCientifica(String linea) {
     // Dividir la línea en partes utilizando el delimitador ";"
     String[] partes = linea.split(";");
 
@@ -200,6 +212,13 @@ return listaStrings;
         );
     }
     // Método para generar la lista de científicas para el mes de marzo
+    // Algoritmo:
+    // 1. Crear un array de Cientifica con capacidad para 31 elementos.
+    // 2. Inicializar variables de control para el día y para verificar si se ha encontrado el primer "1-mar".
+    // 3. Buscar la primera científica con fecha "1-mar" y agregarla a la lista de marzo.
+    // 4. Llenar el resto de los días de marzo con científicas válidas seleccionadas aleatoriamente.
+    // 5. Devolver el array de científicas para marzo.
+
     public static Cientifica[] obtenerListaCientificasMarzo(Cientifica[] listaCientificas) {
     Random random = new Random();
     Cientifica[] listaCientificasMarzo = new Cientifica[31];
@@ -218,7 +237,7 @@ return listaStrings;
     // Seleccionar aleatoriamente científicas válidas para el resto de los días de marzo
     while (dia < 31) {
         int randomNum = random.nextInt(listaCientificas.length);
-        if (cientificaValida(listaCientificas[randomNum], listaCientificasMarzo)) {
+        if (esCientificaValida(listaCientificas[randomNum], listaCientificasMarzo)) {
             listaCientificasMarzo[dia] = listaCientificas[randomNum];
             dia++;
         }
@@ -227,7 +246,15 @@ return listaStrings;
     return listaCientificasMarzo;
     }
     // Método para validar si una científica es válida para ser añadida a la lista de marzo
-   public static boolean esCientificaValida(Cientifica cientifica, Cientifica[] listaCientificas) {
+    // Algoritmo:
+    // 1. Inicializar variables de control para la validación.
+    // 2. Verificar si el año del cartel y el año de nacimiento son válidos.
+    // 3. Verificar que la científica no tenga la misma especialidad ni fecha que las ya añadidas.
+    // 4. Encontrar la última científica añadida a la lista.
+    // 5. Verificar que la científica no haya nacido en el mismo siglo que la última científica añadida.
+    // 6. Devolver el resultado de la validación.
+
+    public static boolean esCientificaValida(Cientifica cientifica, Cientifica[] listaCientificas) {
     boolean esValida = true;
     boolean mismaEspecialidad = false;
     boolean encontradaUltima = false;
