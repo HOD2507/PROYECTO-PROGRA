@@ -108,25 +108,26 @@ return listaStrings;
 
     // Método para escribir un archivo CSV
     public static void escribirCSV(String[] listaCientificas) {
-        String rutaArchivo = "src/planning_marzo.csv";
-        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(rutaArchivo), StandardCharsets.UTF_8)) {
-            // Escribir encabezados
-            writer.write(new Cientifica("Científicas", "Año nacimiento", "Fecha",
-                    "Bio", "Especialidad", "Cartel", "Año",
-                    "Otros Carteles", "Instagram", "Pais", "Wikipedia").toString());
+    String rutaArchivo = "src/planning_marzo.csv";
+    try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(rutaArchivo), StandardCharsets.UTF_8)) {
+        // Escribir encabezados
+        writer.write(new Cientifica("Científicas", "Año nacimiento", "Fecha",
+                "Bio", "Especialidad", "Cartel", "Año",
+                "Otros Carteles", "Instagram", "Pais", "Wikipedia").toString());
+        writer.write("\n\n");
+
+        // Escribir datos
+        for (int i = 0; i < listaCientificas.length; i++) {
+            writer.write(listaCientificas[i]);
             writer.write("\n\n");
-
-            // Escribir datos
-            for (String cientifica : listaCientificas) {
-                writer.write(cientifica);
-                writer.write("\n\n");
-            }
-
-            System.out.println("Archivo CSV creado exitosamente en " + rutaArchivo);
-        } catch (IOException e) {
-            System.err.println("Ocurrió un error al escribir en el archivo: " + e.getMessage());
         }
+
+        System.out.println("Archivo CSV creado exitosamente en " + rutaArchivo);
+    } catch (IOException e) {
+        System.out.println("Ocurrió un error al escribir en el archivo: " + e.getMessage());
     }
+}
+
 
     // Método para leer el archivo CSV y separar por líneas
     public static String[] leerLineasCSV(String archivoCSV) throws IOException {
